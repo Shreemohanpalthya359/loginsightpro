@@ -34,29 +34,65 @@ export default function UploadBox({ onResult }) {
 
   return (
     <div style={styles.box}>
-      <input
-        type="file"
-        accept=".log,.txt"
-        onChange={(e) => setFile(e.target.files[0])}
-      />
+      <div style={styles.uploadContainer}>
+        <label style={styles.fileInputLabel}>
+          <input
+            type="file"
+            accept=".log,.txt"
+            onChange={(e) => setFile(e.target.files[0])}
+            style={styles.fileInput}
+          />
+          <span style={styles.fileInputSpan}>
+            📁 {file ? file.name : "Choose File"}
+          </span>
+        </label>
+      </div>
 
       <button onClick={handleUpload} style={styles.button}>
         {loading ? "Uploading..." : "Upload & Analyze"}
       </button>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p style={{ color: "#dc2626", fontSize: "14px", marginTop: "12px" }}>{error}</p>}
     </div>
   );
 }
 
 const styles = {
   box: {
-    marginTop: "40px",
+    marginTop: "0px",
     textAlign: "center",
   },
-  button: {
-    marginLeft: "10px",
-    padding: "8px 16px",
+  uploadContainer: {
+    marginBottom: "20px",
+  },
+  fileInputLabel: {
+    display: "inline-block",
     cursor: "pointer",
+  },
+  fileInput: {
+    display: "none",
+  },
+  fileInputSpan: {
+    display: "inline-block",
+    padding: "14px 24px",
+    backgroundColor: "#f9fafb",
+    border: "2px solid #000000",
+    borderRadius: "10px",
+    color: "#1f2937",
+    fontWeight: "900",
+    fontSize: "16px",
+    transition: "all 0.3s ease",
+  },
+  button: {
+    marginLeft: "14px",
+    padding: "14px 32px",
+    backgroundColor: "#000000",
+    color: "#ffffff",
+    border: "none",
+    borderRadius: "10px",
+    cursor: "pointer",
+    fontWeight: "900",
+    fontSize: "16px",
+    transition: "all 0.3s ease",
   },
 };

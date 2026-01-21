@@ -9,7 +9,7 @@ import ErrorRateChart from "../components/ErrorRateChart";
 import EndpointErrorChart from "../components/EndpointErrorChart";
 import ResponseTimeChart from "../components/ResponseTimeChart";
 
-export default function Dashboard() {
+export default function Dashboard({ onBack }) {
   const [result, setResult] = useState(null);
 
   const peakHour =
@@ -20,25 +20,40 @@ export default function Dashboard() {
     )[0];
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 text-gray-900 flex flex-col">
       
       {/* HEADER BAR */}
-      <header className="border-b border-slate-800 bg-slate-950">
-        <div className="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
-          <h1 className="text-3xl font-bold">
-            LogInsight <span className="text-sky-400">Pro</span>
-          </h1>
-          <p className="text-slate-400 text-sm">
-            Log Analytics & Observability Dashboard
-          </p>
+      <header className="border-b border-black bg-white sticky top-0 z-40 shadow-sm">
+        <div className="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
+          <div className="flex items-center gap-6">
+            <button
+              onClick={onBack}
+              className="flex items-center gap-2 px-5 py-2 bg-black text-white hover:bg-gray-800 rounded-full transition font-bold text-sm"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back
+            </button>
+            <div>
+              <h1 className="text-3xl font-black text-black">LogInsight</h1>
+              <p className="text-xs text-gray-600 font-semibold">Log Analytics Dashboard</p>
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="text-lg font-black text-black">
+              📊 Dashboard
+            </p>
+            <p className="text-sm text-gray-600 font-semibold">Real-time Analysis</p>
+          </div>
         </div>
       </header>
 
       {/* MAIN CONTENT */}
-      <section className="max-w-7xl mx-auto px-8 py-10 space-y-16">
+      <section className="flex-1 max-w-7xl mx-auto w-full px-8 py-12 space-y-12">
 
         {/* UPLOAD */}
-        <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+        <div className="bg-gradient-to-br from-gray-50 to-white border-2 border-black p-10 rounded-2xl shadow-lg hover:shadow-xl transition">
           <UploadBox onResult={setResult} />
         </div>
 
@@ -46,7 +61,7 @@ export default function Dashboard() {
           <>
             {/* KPI SECTION */}
             <section>
-              <h2 className="text-xl font-semibold mb-4 text-slate-300">
+              <h2 className="text-4xl font-black mb-8 text-black">
                 Overview
               </h2>
               <div className="flex flex-wrap gap-6">
@@ -58,12 +73,14 @@ export default function Dashboard() {
 
             {/* VISUAL ANALYTICS */}
             <section>
-              <h2 className="text-2xl font-semibold mb-2">
-                Visual Analytics
-              </h2>
-              <p className="text-slate-400 mb-6">
-                Traffic patterns, error severity, endpoint health, and performance metrics
-              </p>
+              <div className="mb-10">
+                <h2 className="text-4xl font-black mb-3 text-black">
+                  Visual Analytics
+                </h2>
+                <p className="text-lg text-gray-700 font-semibold">
+                  Traffic patterns, error severity, endpoint health, and performance metrics
+                </p>
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <DashboardCard>
@@ -93,49 +110,65 @@ export default function Dashboard() {
             </section>
 
             {/* TABLE ANALYSIS */}
-            <section className="space-y-12">
-              <h2 className="text-2xl font-semibold">
+            <section className="space-y-10">
+              <h2 className="text-4xl font-black text-black">
                 Detailed Analysis
               </h2>
 
-              {/* Error Codes */}
-              <div>
-                <h3 className="text-lg font-semibold mb-2">
-                  Error Code Breakdown
-                </h3>
-                <ul className="text-slate-300">
-                  {Object.entries(result.error_counts).map(([code, count]) => (
-                    <li key={code}>HTTP {code}: {count}</li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Top IPs */}
-              <div>
-                <h3 className="text-lg font-semibold mb-2">
-                  Top IP Addresses
-                </h3>
-                <table className="w-[420px] border-collapse">
-                  <thead>
-                    <tr className="border-b border-slate-700">
-                      <th className="text-left py-2">IP</th>
-                      <th className="text-left py-2">Errors</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Object.entries(result.top_ips).map(([ip, count]) => (
-                      <tr key={ip} className="border-b border-slate-800">
-                        <td className="py-2">{ip}</td>
-                        <td className="py-2">{count}</td>
-                      </tr>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Error Codes */}
+                <div className="bg-white border-2 border-black rounded-2xl p-10 shadow-lg hover:shadow-xl transition">
+                  <h3 className="text-2xl font-black mb-8 text-black">
+                    Error Code Breakdown
+                  </h3>
+                  <ul className="space-y-4">
+                    {Object.entries(result.error_counts).map(([code, count]) => (
+                      <li key={code} className="flex justify-between items-center p-4 bg-gray-100 hover:bg-gray-200 rounded-xl border-2 border-black transition group">
+                        <span className="font-black text-black text-lg group-hover:translate-x-1 transition">HTTP {code}</span>
+                        <span className="bg-black text-white px-4 py-2 rounded-full text-sm font-black">{count}</span>
+                      </li>
                     ))}
-                  </tbody>
-                </table>
+                  </ul>
+                </div>
+
+                {/* Top IPs */}
+                <div className="bg-white border-2 border-black rounded-2xl p-10 shadow-lg hover:shadow-xl transition">
+                  <h3 className="text-2xl font-black mb-8 text-black">
+                    Top IP Addresses
+                  </h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b-2 border-black">
+                          <th className="text-left py-4 px-4 font-black text-black text-lg">IP Address</th>
+                          <th className="text-right py-4 px-4 font-black text-black text-lg">Errors</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {Object.entries(result.top_ips).map(([ip, count]) => (
+                          <tr key={ip} className="border-b-2 border-gray-300 hover:bg-gray-50 transition group">
+                            <td className="py-4 px-4 text-gray-800 font-semibold group-hover:text-black transition">{ip}</td>
+                            <td className="py-4 px-4 text-right">
+                              <span className="bg-black text-white px-4 py-2 rounded-full text-sm font-black">{count}</span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </section>
           </>
         )}
       </section>
+
+      {/* Footer - Fixed at bottom */}
+      <footer className="border-t-2 border-black bg-black text-white py-6 mt-16 w-full">
+        <div className="max-w-7xl mx-auto px-8 text-center">
+          <p className="text-sm font-semibold text-gray-400">&copy; 2026 LogInsight. Professional log analysis made simple.</p>
+        </div>
+      </footer>
     </main>
   );
 }
@@ -143,7 +176,7 @@ export default function Dashboard() {
 /* ---------- Reusable Dashboard Card ---------- */
 function DashboardCard({ children }) {
   return (
-    <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow">
+    <div className="bg-white border-2 border-black p-8 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition transform duration-300 group">
       {children}
     </div>
   );

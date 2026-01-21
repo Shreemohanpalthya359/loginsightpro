@@ -10,7 +10,7 @@ function App() {
       {!showDashboard ? (
         <Landing onStart={() => setShowDashboard(true)} />
       ) : (
-        <Dashboard />
+        <Dashboard onBack={() => setShowDashboard(false)} />
       )}
     </>
   );
