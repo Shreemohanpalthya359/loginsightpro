@@ -15,6 +15,7 @@ export default function ResponseTimeChart({ avgResponseTime }) {
     labels: Object.keys(avgResponseTime),
     datasets: [
       {
+        label: "Avg Response Time (ms)",
         data: Object.values(avgResponseTime),
         backgroundColor: "#22c55e",
         borderRadius: 6,
@@ -24,23 +25,38 @@ export default function ResponseTimeChart({ avgResponseTime }) {
 
   const options = {
     responsive: true,
-    animation: { duration: 1200, easing: "easeOutQuart" },
+    animation: {
+      duration: 1200,
+      easing: "easeOutQuart",
+    },
     plugins: {
       legend: { display: false },
       title: {
         display: true,
-        text: "Average Response Time (ms)",
+        text: "Average Response Time per Endpoint",
         color: "#e5e7eb",
         font: { size: 16, weight: "bold" },
       },
     },
     scales: {
       x: {
+        title: {
+          display: true,
+          text: "API Endpoint",
+          color: "#cbd5f5",
+          font: { size: 13, weight: "bold" },
+        },
         ticks: { color: "#94a3b8" },
         grid: { color: "#1e293b" },
       },
       y: {
         beginAtZero: true,
+        title: {
+          display: true,
+          text: "Response Time (ms)",
+          color: "#cbd5f5",
+          font: { size: 13, weight: "bold" },
+        },
         ticks: { color: "#94a3b8" },
         grid: { color: "#1e293b" },
       },

@@ -25,7 +25,10 @@ export default function ErrorBarChart({ errorCounts }) {
 
   const options = {
     responsive: true,
-    animation: { duration: 1200, easing: "easeOutQuart" },
+    animation: {
+      duration: 1200,
+      easing: "easeOutQuart",
+    },
     plugins: {
       legend: { display: false },
       title: {
@@ -37,11 +40,23 @@ export default function ErrorBarChart({ errorCounts }) {
     },
     scales: {
       x: {
+        title: {
+          display: true,
+          text: "HTTP Status Codes",
+          color: "#cbd5f5",
+          font: { size: 13, weight: "bold" },
+        },
         ticks: { color: "#94a3b8" },
         grid: { color: "#1e293b" },
       },
       y: {
         beginAtZero: true,
+        title: {
+          display: true,
+          text: "Error Count",
+          color: "#cbd5f5",
+          font: { size: 13, weight: "bold" },
+        },
         ticks: { color: "#94a3b8" },
         grid: { color: "#1e293b" },
       },

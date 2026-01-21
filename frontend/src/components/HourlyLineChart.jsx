@@ -23,6 +23,7 @@ export default function HourlyLineChart({ hourlyErrors }) {
     labels: Object.keys(hourlyErrors).map((h) => `${h}:00`),
     datasets: [
       {
+        label: "Errors",
         data: Object.values(hourlyErrors),
         borderColor: "#22c55e",
         backgroundColor: "#22c55e",
@@ -34,7 +35,10 @@ export default function HourlyLineChart({ hourlyErrors }) {
 
   const options = {
     responsive: true,
-    animation: { duration: 1200, easing: "easeOutQuart" },
+    animation: {
+      duration: 1200,
+      easing: "easeOutQuart",
+    },
     plugins: {
       legend: { display: false },
       title: {
@@ -46,11 +50,23 @@ export default function HourlyLineChart({ hourlyErrors }) {
     },
     scales: {
       x: {
+        title: {
+          display: true,
+          text: "Time (Hour)",
+          color: "#cbd5f5",
+          font: { size: 13, weight: "bold" },
+        },
         ticks: { color: "#94a3b8" },
         grid: { color: "#1e293b" },
       },
       y: {
         beginAtZero: true,
+        title: {
+          display: true,
+          text: "Number of Errors",
+          color: "#cbd5f5",
+          font: { size: 13, weight: "bold" },
+        },
         ticks: { color: "#94a3b8" },
         grid: { color: "#1e293b" },
       },

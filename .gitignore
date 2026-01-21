@@ -1,0 +1,14 @@
+# Logs
+*.log
+backend/logs/
+backend/app/static/uploads/
+
+# Virtual env & node
+venv/
+node_modules/
+
+# Python cache
+__pycache__/
+
+# Env
+.env

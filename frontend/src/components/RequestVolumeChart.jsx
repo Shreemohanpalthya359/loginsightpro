@@ -23,8 +23,10 @@ export default function RequestVolumeChart({ hourlyRequests }) {
     labels: Object.keys(hourlyRequests).map((h) => `${h}:00`),
     datasets: [
       {
+        label: "Requests",
         data: Object.values(hourlyRequests),
         borderColor: "#38bdf8",
+        backgroundColor: "#38bdf8",
         tension: 0.4,
         pointRadius: 5,
       },
@@ -33,23 +35,38 @@ export default function RequestVolumeChart({ hourlyRequests }) {
 
   const options = {
     responsive: true,
-    animation: { duration: 1200, easing: "easeOutQuart" },
+    animation: {
+      duration: 1200,
+      easing: "easeOutQuart",
+    },
     plugins: {
       legend: { display: false },
       title: {
         display: true,
-        text: "Request Volume Trend",
+        text: "Request Volume Over Time",
         color: "#e5e7eb",
         font: { size: 16, weight: "bold" },
       },
     },
     scales: {
       x: {
+        title: {
+          display: true,
+          text: "Time (Hour)",
+          color: "#cbd5f5",
+          font: { size: 13, weight: "bold" },
+        },
         ticks: { color: "#94a3b8" },
         grid: { color: "#1e293b" },
       },
       y: {
         beginAtZero: true,
+        title: {
+          display: true,
+          text: "Number of Requests",
+          color: "#cbd5f5",
+          font: { size: 13, weight: "bold" },
+        },
         ticks: { color: "#94a3b8" },
         grid: { color: "#1e293b" },
       },

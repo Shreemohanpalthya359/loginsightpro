@@ -15,6 +15,7 @@ export default function EndpointErrorChart({ endpointErrors }) {
     labels: Object.keys(endpointErrors),
     datasets: [
       {
+        label: "Errors",
         data: Object.values(endpointErrors),
         backgroundColor: "#dc2626",
         borderRadius: 6,
@@ -24,7 +25,10 @@ export default function EndpointErrorChart({ endpointErrors }) {
 
   const options = {
     responsive: true,
-    animation: { duration: 1200, easing: "easeOutQuart" },
+    animation: {
+      duration: 1200,
+      easing: "easeOutQuart",
+    },
     plugins: {
       legend: { display: false },
       title: {
@@ -36,11 +40,23 @@ export default function EndpointErrorChart({ endpointErrors }) {
     },
     scales: {
       x: {
+        title: {
+          display: true,
+          text: "API Endpoint",
+          color: "#cbd5f5",
+          font: { size: 13, weight: "bold" },
+        },
         ticks: { color: "#94a3b8" },
         grid: { color: "#1e293b" },
       },
       y: {
         beginAtZero: true,
+        title: {
+          display: true,
+          text: "Error Count",
+          color: "#cbd5f5",
+          font: { size: 13, weight: "bold" },
+        },
         ticks: { color: "#94a3b8" },
         grid: { color: "#1e293b" },
       },
