@@ -1,0 +1,60 @@
+import {
+  Chart as ChartJS,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+
+ChartJS.register(
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Tooltip,
+  Legend
+);
+
+export default function ErrorRateChart({ errorRate }) {
+  const data = {
+    labels: Object.keys(errorRate).map((h) => `${h}:00`),
+    datasets: [
+      {
+        data: Object.values(errorRate),
+        borderColor: "#f97316",
+        tension: 0.4,
+        pointRadius: 5,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    animation: { duration: 1200, easing: "easeOutQuart" },
+    plugins: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: "Error Rate (%)",
+        color: "#e5e7eb",
+        font: { size: 16, weight: "bold" },
+      },
+    },
+    scales: {
+      x: {
+        ticks: { color: "#94a3b8" },
+        grid: { color: "#1e293b" },
+      },
+      y: {
+        beginAtZero: true,
+        ticks: { color: "#94a3b8" },
+        grid: { color: "#1e293b" },
+      },
+    },
+  };
+
+  return <Line data={data} options={options} />;
+}
