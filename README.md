@@ -76,7 +76,7 @@ All charts include:
 
 ### 🔙 Backend
 
-* Python
+* Python 3.9+
 * Flask
 * Regular Expressions (log parsing)
 * Logging module (execution & auditing)
@@ -93,6 +93,64 @@ All charts include:
 * Git & GitHub
 * Curl / Postman
 * Docker (optional)
+
+---
+
+## ⚙️ Installation & Setup Guide
+
+### 📌 Prerequisites
+
+Make sure you have the following installed:
+
+* Python **3.9 or above**
+* Node.js **18+** and npm
+* Git
+
+---
+
+### 🔧 Backend Setup (Flask)
+
+```bash
+cd backend
+python3 -m venv venv
+source venv/bin/activate   # macOS / Linux
+# venv\\Scripts\\activate  # Windows
+
+pip install -r requirements.txt
+python3 run.py
+```
+
+✅ Backend will start at:
+
+```
+http://127.0.0.1:5000
+```
+
+---
+
+### 🎨 Frontend Setup (React + Tailwind)
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+✅ Frontend will start at:
+
+```
+http://localhost:5173
+```
+
+---
+
+## 🚀 Quick Start Guide
+
+1. Start the **Flask backend**
+2. Start the **React frontend**
+3. Open the browser at `http://localhost:5173`
+4. Upload a server log file
+5. View real-time analytics and charts
 
 ---
 
