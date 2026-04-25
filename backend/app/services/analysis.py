@@ -1,4 +1,5 @@
 import pandas as pd
+from app.services.anomaly_detector import detect_anomalies
 
 def analyze_logs(logs):
     df = pd.DataFrame(logs)
@@ -32,6 +33,9 @@ def analyze_logs(logs):
         df.groupby("path")["response_time"].mean().round(2).to_dict()
     )
 
+    # ✅ NEW: Anomaly Detection
+    anomalies_result = detect_anomalies(df)
+
     return {
         "total_requests": total_requests,
         "total_errors": len(error_df),
@@ -42,4 +46,6 @@ def analyze_logs(logs):
         "error_rate": error_rate,
         "endpoint_errors": endpoint_errors,
         "avg_response_time": avg_response_time,
+        "anomaly_count": anomalies_result["anomaly_count"],
+        "anomalous_logs": anomalies_result["anomalous_logs"]
     }

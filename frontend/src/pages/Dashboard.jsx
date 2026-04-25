@@ -68,6 +68,9 @@ export default function Dashboard({ onBack }) {
                 <KpiCard title="Total Requests" value={result.total_requests} />
                 <KpiCard title="Total Errors" value={result.total_errors} />
                 <KpiCard title="Peak Error Hour" value={`${peakHour}:00`} />
+                {result.anomaly_count !== undefined && (
+                  <KpiCard title="AI Anomalies" value={result.anomaly_count} />
+                )}
               </div>
             </section>
 
@@ -158,6 +161,52 @@ export default function Dashboard({ onBack }) {
                   </div>
                 </div>
               </div>
+
+              {/* AI Anomalies Section */}
+              {result.anomalous_logs && result.anomalous_logs.length > 0 && (
+                <div className="bg-white border-2 border-black rounded-2xl p-10 shadow-lg hover:shadow-xl transition mt-8">
+                  <div className="flex items-center gap-3 mb-8">
+                    <h3 className="text-2xl font-black text-black">
+                      🤖 AI Detected Anomalies
+                    </h3>
+                    <span className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">High Risk</span>
+                  </div>
+                  <p className="text-gray-600 mb-6 font-semibold">
+                    The Isolation Forest model flagged these requests as highly irregular based on response time and status codes.
+                  </p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left">
+                      <thead>
+                        <tr className="border-b-2 border-black bg-gray-50">
+                          <th className="py-4 px-4 font-black text-black">Timestamp</th>
+                          <th className="py-4 px-4 font-black text-black">IP Address</th>
+                          <th className="py-4 px-4 font-black text-black">Method/Path</th>
+                          <th className="py-4 px-4 font-black text-black">Status</th>
+                          <th className="py-4 px-4 font-black text-black text-right">Response Time (ms)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {result.anomalous_logs.map((log, idx) => (
+                          <tr key={idx} className="border-b-2 border-gray-200 hover:bg-red-50 transition">
+                            <td className="py-4 px-4 text-sm font-mono text-gray-600">{log.timestamp}</td>
+                            <td className="py-4 px-4 font-semibold text-gray-800">{log.ip}</td>
+                            <td className="py-4 px-4 text-sm">
+                              <span className="font-bold text-black bg-gray-200 px-2 py-1 rounded mr-2">{log.method}</span>
+                              <span className="text-gray-600">{log.path}</span>
+                            </td>
+                            <td className="py-4 px-4">
+                              <span className={`px-3 py-1 rounded-full text-xs font-black ${log.status >= 500 ? 'bg-red-200 text-red-800' : log.status >= 400 ? 'bg-yellow-200 text-yellow-800' : 'bg-gray-200 text-gray-800'}`}>
+                                {log.status}
+                              </span>
+                            </td>
+                            <td className="py-4 px-4 text-right font-black text-red-600">{log.response_time} ms</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
             </section>
           </>
         )}
